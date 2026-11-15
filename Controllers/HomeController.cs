@@ -6,6 +6,10 @@ namespace DishFinder.Controllers
 {
     public class HomeController : Controller
     {
+        public IActionResult Stalls()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
