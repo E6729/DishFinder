@@ -1,0 +1,40 @@
+@model DishFinder.Models.Stall
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+<p>@Model.Description</p>
+<p class="text-muted">@Model.Location</p>
+
+<p><a asp-action="Index">Back to Stalls</a></p>
+
+@if (Model.MenuItems.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Availability</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MenuItems)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@($"₱{item.Price:N2}")</td>
+                    <td>@(item.IsAvailable ? "Available" : "Sold out")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>This stall has no menu items yet.</p>
+}
