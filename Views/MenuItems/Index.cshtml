@@ -1,0 +1,85 @@
+@model IEnumerable<DishFinder.Models.MenuItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Foods</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Availability
+            </th>
+            <th>
+                Vendor
+            </th>
+            <th>
+                Location
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Name)
+            </td>
+            <td>
+                    @*Html.DisplayFor(model => item.Price)*@@($"₱{item.Price:N2}")
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Description)
+            </td>
+             <td>
+                @if (item.IsAvailable)
+                {
+                    <span class="badge bg-success">Available</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Sold Out</span>
+                }
+            </td>
+            <td>
+                @item.Stall?.Name
+            </td>
+            <td>
+                @item.Stall?.Location
+            </td>
+
+            <td>
+                    @if (item.IsAvailable == true)
+                    {
+                        <form asp-controller="Cart" asp-action="Add" method="post">
+                            <input type="hidden" name="MenuItemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-primary btn-sm">Order</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary btn-sm" disabled>Sold Out</button>
+                    }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
