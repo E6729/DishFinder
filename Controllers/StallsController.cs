@@ -27,7 +27,7 @@ public class StallsController : Controller
         }
 
         var stall = await _context.Stalls
-            .Include(s => s.MenuItems)
+            .Include(stall => stall.MenuItems)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (stall == null)
         {

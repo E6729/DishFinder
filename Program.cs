@@ -10,6 +10,9 @@ builder.Services.AddDbContext<DishFinderDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDistributedMemoryCache(); //For local sessions used in adding to cart
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +29,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.UseSession(); //For sessions as well
 
 app.MapControllerRoute(
     name: "default",

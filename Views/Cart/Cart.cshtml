@@ -1,0 +1,39 @@
+﻿@model List<DishFinder.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<h1>Your Cart</h1>
+
+@if (!Model.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Dish</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@($"₱{item.Price:N2}")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Quantity * item.Price)</td>
+                    <td><a asp-controller="Cart" asp-action="Delete" asp-route-MenuItemId="@item.MenuItemId">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>Total: @($"₱{Model.Sum(item => item.Price * item.Quantity):N2}")</p>
+}

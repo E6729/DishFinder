@@ -4,6 +4,7 @@ namespace DishFinder.Models
 {
     public class DishFinderDbContext : DbContext
     {
+        public DbSet<DishFinder.Models.OrderItem> OrderItem { get; set; } = default!;
         public DishFinderDbContext(DbContextOptions<DishFinderDbContext> options) : base(options) { }
         public DbSet<Stall> Stalls { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
