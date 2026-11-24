@@ -17,7 +17,6 @@ namespace DishFinder.Controllers
         private List<CartItem> GetCart()
         {
             var json = HttpContext.Session.GetString("Cart");
-            // TODO: if json is null, return a new empty list
             if(json == null)
             {
                 return new List<CartItem>();
@@ -26,15 +25,11 @@ namespace DishFinder.Controllers
             {
                 return JsonSerializer.Deserialize<List<CartItem>>(json) ?? new List<CartItem>();
             }
-            // TODO: otherwise turn the JSON back into a List<CartItem>
-            //       (hint: JsonSerializer.Deserialize<List<CartItem>>)
         }
 
         private void SaveCart(List<CartItem> cart)
         {
-            // TODO: turn the list into a JSON string (JsonSerializer.Serialize)
             var json = JsonSerializer.Serialize(cart);
-            //       and store it with HttpContext.Session.SetString("Cart", ...)
             HttpContext.Session.SetString("Cart", json);
         }
 
@@ -42,9 +37,9 @@ namespace DishFinder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(int MenuItemId)
         {
-            // 1. Find the dish in the database (look at how StallsController.Details does it)
+            // 1. Find the dish in the database
             var item = await _context.MenuItems.FindAsync(MenuItemId);
-            //    What should happen if it's not found?
+            //    What happens if not found
             if(item == null)
             {
                 return NotFound();
@@ -78,7 +73,6 @@ namespace DishFinder.Controllers
 
         public IActionResult Cart()
         {
-            // we'll do this after Add works; for now it can
             return View(GetCart());
         }
 
